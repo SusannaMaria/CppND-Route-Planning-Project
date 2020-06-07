@@ -24,14 +24,14 @@ set(_FINDPACKAGE_IO2D_CONFIG_DIR "${CMAKE_CURRENT_BINARY_DIR}/io2d/lib/cmake/io2
 
 ExternalProject_Add(
   OSM_A_star_search
-  PREFIX OSM_A_star_search
+  PREFIX osm_astar
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.."
-  BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/OSM_A_star_search"  
+  BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/osm_astar"  
   INSTALL_COMMAND ""
   CMAKE_ARGS -Dio2d_DIR:PATH=${_FINDPACKAGE_IO2D_CONFIG_DIR}
   DEPENDS io2d
 )
 
 add_custom_command(TARGET OSM_A_star_search POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/OSM_A_star_search/OSM_A_star_search ${CMAKE_CURRENT_SOURCE_DIR}/..
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/osm_astar/OSM_A_star_search ${CMAKE_CURRENT_BINARY_DIR}
 )                       

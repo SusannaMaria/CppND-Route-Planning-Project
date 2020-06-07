@@ -37,6 +37,15 @@ Using XUbuntu 20.04
 ## Compiling and Running
 
 ### Compiling
+
+to build the project with cloning and building io2d before call
+
+```
+mkdir -p build
+cmake ../ExternalBuild
+make
+```
+
 To compile the project, first, create a `build` directory and change to that directory:
 ```
 mkdir build && cd build
