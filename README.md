@@ -15,6 +15,10 @@ or with SSH:
 git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-submodules
 ```
 
+## Linux Installation
+Using XUbuntu 20.04
+```sudo apt-get install build-essential cmake libcairo2-dev libgraphicsmagick1-dev libpng-dev```
+
 ## Dependencies for Running Locally
 * cmake >= 3.11.3
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
