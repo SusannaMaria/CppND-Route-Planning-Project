@@ -34,4 +34,5 @@ ExternalProject_Add(
 
 add_custom_command(TARGET OSM_A_star_search POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/osm_astar/OSM_A_star_search ${CMAKE_CURRENT_BINARY_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/osm_astar/test ${CMAKE_CURRENT_BINARY_DIR}
 )                       

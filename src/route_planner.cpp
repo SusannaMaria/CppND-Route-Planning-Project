@@ -1,5 +1,12 @@
 #include "route_planner.h"
+
 #include <algorithm>
+
+using std::cout;
+using std::endl;
+using std::string;
+using std::vector;
+using std::sort;
 
 RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y): m_Model(model) {
     // Convert inputs to percentage:
@@ -10,8 +17,11 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
 
     // TODO 2: Use the m_Model.FindClosestNode method to find the closest nodes to the starting and ending coordinates.
     // Store the nodes you find in the RoutePlanner's start_node and end_node attributes.
-
+    m_Model = model; 
+    start_node =  &(m_Model.FindClosestNode(start_x, start_y));
+    end_node =  &(m_Model.FindClosestNode(end_x, end_y));
 }
+
 
 
 // TODO 3: Implement the CalculateHValue method.
@@ -20,6 +30,7 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
 // - Node objects have a distance method to determine the distance to another node.
 
 float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
+    return node->distance(*this->end_node);
 
 }
 
@@ -33,6 +44,18 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
 
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 
+    current_node->FindNeighbors();
+
+    for( auto n_node : current_node->neighbors){
+
+        n_node->parent = current_node;
+        n_node->h_value = this->CalculateHValue(n_node);
+        n_node->g_value = current_node->g_value + 1;
+        this->open_list.push_back(n_node);
+        n_node->visited = true;
+
+    }
+
 }
 
 
@@ -43,7 +66,19 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 // - Remove that node from the open_list.
 // - Return the pointer.
 
+bool Compare(const RouteModel::Node *a, const RouteModel::Node *b){
+  
+  float f1 = a->g_value + a->h_value;
+  float f2 = b->g_value + b->h_value;
+  return f1 > f2;
+}
+
+
 RouteModel::Node *RoutePlanner::NextNode() {
+    sort(this->open_list.begin(), this->open_list.end(), Compare);
+    RouteModel::Node* nody = this->open_list.front();
+    this->open_list.erase(this->open_list.begin());
+    return nody;
 
 }
 
