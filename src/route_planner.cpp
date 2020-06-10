@@ -52,7 +52,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
         n_node->h_value = this->CalculateHValue(n_node);
         n_node->g_value = current_node->g_value + 1;
         this->open_list.push_back(n_node);
-        n_node->visited = true;
+        current_node->visited = true;
 
     }
 
@@ -95,9 +95,17 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
     // Create path_found vector
     distance = 0.0f;
     std::vector<RouteModel::Node> path_found;
-
+    path_found.push_back(*current_node);
+    while(1){
+        path_found.push_back(*(current_node->parent));
+        distance += current_node->distance(*(current_node->parent));
+        current_node = current_node->parent;
+        if (current_node == start_node){
+            break;
+        }
+    }
     // TODO: Implement your solution here.
-
+    std::reverse(std::begin(path_found), std::end(path_found));
     distance *= m_Model.MetricScale(); // Multiply the distance by the scale of the map to get meters.
     return path_found;
 
@@ -112,8 +120,18 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 // - Store the final path in the m_Model.path attribute before the method exits. This path will then be displayed on the map tile.
 
 void RoutePlanner::AStarSearch() {
-    RouteModel::Node *current_node = nullptr;
+    RouteModel::Node *current_node = start_node;
+    
+    while(1){
+        AddNeighbors(current_node);
+        current_node = NextNode();
+        if (current_node==end_node){
+            auto duda = ConstructFinalPath(current_node);
+            m_Model.path = duda;
+            break;
+        }
 
+    }
     // TODO: Implement your solution here.
 
 }
