@@ -8,6 +8,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 project(OSM_A_star_search)
 
+#add_definitions(-DDEBUG)
+
 # Set library output path to /lib
 set(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/lib")
 
